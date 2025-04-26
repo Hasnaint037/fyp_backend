@@ -2,7 +2,7 @@ const Product = require("../schema/product.schema");
 const cloudinary = require("cloudinary").v2;
 
 exports.createProduct = async (req, res) => {
-  const { name, price, description, quantity } = req.body;
+  const { name, price, description, quantity, category } = req.body;
   const { file } = req; // Get file from the request
 
   // Validate inputs
@@ -12,22 +12,22 @@ exports.createProduct = async (req, res) => {
       .json({ success: false, message: "Please fill all the fields" });
   }
 
-  // If image isn't uploaded
-  if (!file) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Image is required" });
-  }
-
   try {
     const newProduct = await Product.create({
       name,
       price,
       description,
-      image: file.path, // Save Cloudinary URL
+      ...(req.file && { image: file.path }),
+      // Save Cloudinary URL
       quantity,
+      category,
+      createdBy: req.user.name,
     });
-    res.status(201).json({ success: true, product: newProduct });
+    res.status(201).json({
+      success: true,
+      product: newProduct,
+      message: "Product Created Successfully",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: error.message });
@@ -37,7 +37,11 @@ exports.createProduct = async (req, res) => {
 exports.getAllProducts = async (req, res) => {
   try {
     const products = await Product.find();
-    res.status(200).json({ success: true, products });
+    res.status(200).json({
+      success: true,
+      products,
+      message: "Products fetched successfully",
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: error.message });
@@ -47,7 +51,7 @@ exports.getAllProducts = async (req, res) => {
 exports.deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedProduct = await Product.deleteById(id);
+    const deletedProduct = await Product.findByIdAndDelete(id);
     if (!deletedProduct) {
       return res
         .status(404)
@@ -121,6 +125,24 @@ exports.updateProduct = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+exports.getCategoryWiseProducts = async (req, res, next) => {
+  try {
+    const getMensProducts = await Product.find({ category: "men" });
+    const getWomensProducts = await Product.find({ category: "women" });
+    const getChildrensProducts = await Product.find({ category: "children" });
+    return res.status(200).json({
+      success: true,
+      data: [
+        getMensProducts.length,
+        getWomensProducts.length,
+        getChildrensProducts.length,
+      ],
+    });
+  } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }
 };

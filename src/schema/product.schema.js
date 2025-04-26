@@ -16,11 +16,18 @@ const productSchema = mongoose.Schema(
     },
     image: {
       type: String,
-      required: true,
     },
     quantity: {
       type: Number,
       default: 5,
+    },
+    category: {
+      type: String,
+      enum: ["men", "women", "children"],
+    },
+    createdBy: {
+      type: String,
+      required: true,
     },
   },
   {

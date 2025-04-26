@@ -7,6 +7,8 @@ const {
   getAllProducts,
   deleteProduct,
   getProductById,
+  updateProduct,
+  getCategoryWiseProducts,
 } = require("../controllers/product.controller");
 const upload = require("../services/multer");
 
@@ -22,6 +24,10 @@ router.route("/getSingle/:id").get(isAuthenticated, checkAdmin, getProductById);
 
 router
   .route("/update/:id")
-  .put(isAuthenticated, checkAdmin, upload.single("image"), createProduct);
+  .put(isAuthenticated, checkAdmin, upload.single("image"), updateProduct);
+
+router
+  .route("/getCategoryWiseProducts")
+  .get(isAuthenticated, checkAdmin, getCategoryWiseProducts);
 
 module.exports = router;
