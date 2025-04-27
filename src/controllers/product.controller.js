@@ -146,3 +146,30 @@ exports.getCategoryWiseProducts = async (req, res, next) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
+exports.getForMen = async (req, res, next) => {
+  try {
+    const products = await Product.find({ category: "men" });
+    return res.status(200).json({ success: true, products: products });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+exports.getForWomen = async (req, res, next) => {
+  try {
+    const products = await Product.find({ category: "women" });
+    return res.status(200).json({ success: true, products: products });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+exports.getForChildren = async (req, res, next) => {
+  try {
+    const products = await Product.find({ category: "children" });
+    return res.status(200).json({ success: true, products: products });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
