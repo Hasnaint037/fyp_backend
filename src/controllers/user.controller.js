@@ -44,7 +44,12 @@ exports.userLogin = async (req, res, next) => {
   const passwordMatched = await comparePassword(password, user.password);
   if (passwordMatched) {
     createToken(
-      { email: user.email, role: user.role, name: user?.username },
+      {
+        email: user.email,
+        role: user.role,
+        name: user?.username,
+        _id: user._id,
+      },
       res
     );
     res
