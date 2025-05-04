@@ -14,14 +14,6 @@ const orderItemSchema = new mongoose.Schema({
     type: Number,
     default: 1,
   },
-  size: {
-    type: String,
-    default: null, // optional
-  },
-  color: {
-    type: String,
-    default: "black", // optional
-  },
 });
 
 const orderSchema = new mongoose.Schema(
