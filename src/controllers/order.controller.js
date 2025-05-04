@@ -1,5 +1,5 @@
-import Product from "../schema/product.schema.js"; // make sure the path is correct
-import Order from "../schema/order.schema.js"; // assuming you're using an Order model
+import Product from "../schema/product.schema.js";
+import Order from "../schema/order.schema.js";
 
 export const createOrder = async (req, res) => {
   try {
