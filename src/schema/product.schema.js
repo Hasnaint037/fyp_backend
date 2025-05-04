@@ -23,7 +23,7 @@ const productSchema = mongoose.Schema(
     },
     category: {
       type: String,
-      enum: ["men", "women", "children"],
+      enum: ["mobile", "laptop", "others"],
     },
     createdBy: {
       type: String,

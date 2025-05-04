@@ -64,7 +64,6 @@ exports.userLogin = async (req, res, next) => {
 
 exports.logout = async (req, res, next) => {
   const { token } = req.cookies;
-  console.log("req.cookies", req.cookies); // Debugging
 
   if (token) {
     await BlackListedToken.create({ token });

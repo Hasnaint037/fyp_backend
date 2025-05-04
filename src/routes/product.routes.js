@@ -25,11 +25,11 @@ router.route("/delete/:id").delete(isAuthenticated, checkAdmin, deleteProduct);
 
 router.route("/getSingle/:id").get(isAuthenticated, checkAdmin, getProductById);
 
-router.route("/getall/men").get(isAuthenticated, getForMen);
+router.route("/getall/mobile").get(isAuthenticated, getForMen);
 
-router.route("/getall/women").get(isAuthenticated, getForWomen);
+router.route("/getall/laptop").get(isAuthenticated, getForWomen);
 
-router.route("/getall/children").get(isAuthenticated, getForChildren);
+router.route("/getall/others").get(isAuthenticated, getForChildren);
 
 router
   .route("/update/:id")

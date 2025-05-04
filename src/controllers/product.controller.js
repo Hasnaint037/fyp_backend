@@ -131,9 +131,9 @@ exports.updateProduct = async (req, res) => {
 
 exports.getCategoryWiseProducts = async (req, res, next) => {
   try {
-    const getMensProducts = await Product.find({ category: "men" });
-    const getWomensProducts = await Product.find({ category: "women" });
-    const getChildrensProducts = await Product.find({ category: "children" });
+    const getMensProducts = await Product.find({ category: "mobile" });
+    const getWomensProducts = await Product.find({ category: "laptop" });
+    const getChildrensProducts = await Product.find({ category: "others" });
     return res.status(200).json({
       success: true,
       data: [
@@ -149,7 +149,7 @@ exports.getCategoryWiseProducts = async (req, res, next) => {
 
 exports.getForMen = async (req, res, next) => {
   try {
-    const products = await Product.find({ category: "men" });
+    const products = await Product.find({ category: "mobile" });
     return res.status(200).json({ success: true, products: products });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
@@ -158,7 +158,7 @@ exports.getForMen = async (req, res, next) => {
 
 exports.getForWomen = async (req, res, next) => {
   try {
-    const products = await Product.find({ category: "women" });
+    const products = await Product.find({ category: "laptop" });
     return res.status(200).json({ success: true, products: products });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
@@ -167,7 +167,7 @@ exports.getForWomen = async (req, res, next) => {
 
 exports.getForChildren = async (req, res, next) => {
   try {
-    const products = await Product.find({ category: "children" });
+    const products = await Product.find({ category: "others" });
     return res.status(200).json({ success: true, products: products });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });

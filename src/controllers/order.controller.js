@@ -59,9 +59,9 @@ export const getOrderCountsByCategory = async (req, res) => {
     const orders = await Order.find({}).populate("items.productId");
 
     // Counters for categories
-    let menCount = 0;
-    let womenCount = 0;
-    let childrenCount = 0;
+    let mobileCount = 0;
+    let laptopCount = 0;
+    let othersCount = 0;
 
     // Count how many orders (or items) belong to each category
     orders.forEach((order) => {
@@ -75,15 +75,15 @@ export const getOrderCountsByCategory = async (req, res) => {
       });
 
       // Increase count per order if it includes items from that category
-      if (categoriesInOrder.has("men")) menCount++;
-      if (categoriesInOrder.has("women")) womenCount++;
-      if (categoriesInOrder.has("children")) childrenCount++;
+      if (categoriesInOrder.has("mobile")) mobileCount++;
+      if (categoriesInOrder.has("laptop")) laptopCount++;
+      if (categoriesInOrder.has("others")) othersCount++;
     });
 
     res.status(200).json({
       succcess: true,
       message: "order count fetched successfully",
-      data: [menCount, womenCount, childrenCount],
+      data: [mobileCount, laptopCount, othersCount],
     });
   } catch (error) {
     console.error("Failed to get order category counts:", error);
